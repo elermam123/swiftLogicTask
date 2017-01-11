@@ -12,12 +12,79 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        /**************************
+         Забавная реализация логической задачи:
+         У вас есть три блина и две сковороды. Каждая сторона блина жарится одну минуту. На одну
+         сковороду одновременно помещается лишь один блин. За какое наименьшее время можно
+         пожарить все блины с обеих сторон?
+         
+         Решение:
+         На обе сковородки наливаем блины "1" и "2" - жарим -- 1 мин.
+         
+         На одной переворачиваем блин "1", с другой снимаем блин "2" (прожаренный с одной стороны) и наливаем блин "3". -- 2 мин.
+         
+         С первой снимаем готовый блин "1" и кладем на нее дожариваться блин "2". На второй переворачиваем блин "3". -- 3 мин.
+         
+         
+         **********************/
+        
+        var blinchikiArray  = [0,0,0];
+        var minutesCount = 0
+        
+        while(!blinchikiArray.isEmpty){
+            var countBlins = blinchikiArray.count
+            for blin in 0 ..< countBlins {
+                
+                if(countBlins > blinchikiArray.count){
+                    countBlins = blinchikiArray.count
+                    break
+                }
+                
+                
+                if(blinchikiArray[blin] <= 1 ){
+                    blinchikiArray = skovorodka(blArray: blinchikiArray)
+                    
+                }
+                
+                if( blinchikiArray[blin] == 2 ){
+                    blinchikiArray.remove(at: blin)
+                }
+                
+            }
+            
+            minutesCount+=1
+            
+        }
+        
+        
+        if(blinchikiArray.isEmpty){
+            print("Блины пожарены за ", minutesCount, " минуты")
+        }
+
+        
+        
         return true
     }
+    
+    func skovorodka( blArray: Array<Int>)->Array<Int>{
+        
+        var blArray = blArray
+        for i in 0...blArray.count-1 {
+            if(blArray[i]<2){
+                blArray[i] += 1
+                
+            }
+            if(blArray[i] == 1){
+                blArray.append(blArray[i])
+                blArray.remove(at: i)
+            }
+        }
+        return blArray
+    }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
