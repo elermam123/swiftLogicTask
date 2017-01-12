@@ -60,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
+        
         if(blinchikiArray.isEmpty){
             print("Блины пожарены за ", minutesCount, " минуты")
         }
